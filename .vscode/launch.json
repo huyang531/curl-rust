@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'curl'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=curl",
+                    "--package=curl"
+                ],
+                "filter": {
+                    "name": "curl",
+                    "kind": "bin"
+                }
+            },
+            "args": ["www.eecg.toronto.edu"],
+            "cwd": "${workspaceFolder}"
+        },
+    ]
+}
