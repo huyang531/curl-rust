@@ -1,9 +1,7 @@
 use std::collections::HashMap;
-use std::io::Read;
 use reqwest::blocking::Client;
 use reqwest::header::CONTENT_TYPE;
 use reqwest::Url;
-use std::net::IpAddr;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
