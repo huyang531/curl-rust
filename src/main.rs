@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use url::ParseError;
 use reqwest::blocking::Client;
 use reqwest::header::CONTENT_TYPE;
 use reqwest::Url;
@@ -55,23 +56,14 @@ fn main() {
             }
         }
         Err(e) => {
-            if e.to_string().contains("relative URL without a base") {
-                eprintln!("Error: The URL does not have a valid base protocol.");
-                std::process::exit(1);
-            }
-            if e.to_string().contains("invalid IPv6") {
-                eprintln!("Error: The URL contains an invalid IPv6 address.");
-                std::process::exit(1);
-            }
-            if e.to_string().contains("invalid IPv4") {
-                eprintln!("Error: The URL contains an invalid IPv4 address.");
-                std::process::exit(1);
-            }
-            if e.to_string().contains("invalid port number") {
-                eprintln!("Error: The URL contains an invalid port number.");
-                std::process::exit(1);
-            }
-            eprintln!("Error: {}", e);
+            let err_msg = match e {
+                ParseError::RelativeUrlWithoutBase => String::from("Error: The URL does not have a valid base protocol."),
+                ParseError::InvalidIpv4Address => String::from("Error: The URL contains an invalid IPv4 address."),
+                ParseError::InvalidIpv6Address => String::from("Error: The URL contains an invalid IPv6 address."),
+                ParseError::InvalidPort => String::from("Error: The URL contains an invalid port number."),
+                _ => String::from(e.to_string()),
+            };
+            eprintln!("{}", err_msg);
             std::process::exit(1);
         }
     }
